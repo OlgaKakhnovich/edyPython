@@ -14,23 +14,62 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(cuid())
+  id         Int      @id @default(autoincrement())
   username   String   @unique
   email      String   @unique
   password   String
   profilePic String
+  difficulty Int
+  level      Int      @default(0)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  userProgress UserLevelProgress[]
 }
 
-model Shapter {
-  id       String   @id @default(cuid())
-  title    String
-  levelIds String[]
+model Chapter {
+  id     Int     @id @default(autoincrement())
+  title  String
+  levels Level[]
 }
 
 model Level {
-  id    String @id @default(cuid())
-  title String
-  task  String
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  tasks       Task[]
+  examples    Example[]
+  chapterId   Int
+  chapter     Chapter   @relation(fields: [chapterId], references: [id])
+
+  userProgress UserLevelProgress[]
+}
+
+model Example {
+  id      Int    @id @default(autoincrement())
+  code    String
+  levelId Int
+  level   Level  @relation(fields: [levelId], references: [id])
+}
+
+model Task {
+  id         Int    @id @default(autoincrement())
+  task       String
+  test       String
+  difficulty Int
+  levelId    Int
+  level      Level  @relation(fields: [levelId], references: [id])
+}
+
+model UserLevelProgress {
+  id         Int      @id @default(autoincrement())
+  date       DateTime @default(now())
+  progress   Int
+  countError Int      @default(0)
+  userId     Int
+  levelId    Int
+  user       User     @relation(fields: [userId], references: [id])
+  level      Level    @relation(fields: [levelId], references: [id])
+
+  @@unique([userId, levelId])
 }

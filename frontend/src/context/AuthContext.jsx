@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext({
     authUser: null,
@@ -26,6 +27,7 @@ export const AuthContextProvider = ({ children }) => {
                 setAuthUser(data);
             } catch (error) {
                 console.error(error);
+                toast.error(error.message);
             } finally {
                 setIsLoading(false);
             }

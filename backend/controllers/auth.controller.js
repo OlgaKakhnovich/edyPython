@@ -5,13 +5,13 @@ import generateToken from "../utils/generateToken.js";
 
 export const signup = async (req, res) =>{
   try{
-    const {email, password, username, confirmPassword} = req.body;
+    const {email, password, username, confirmPassword, profilePic, difficulty} = req.body;
 
     if(!email || !password || !confirmPassword || !username){
         return res.status(400).json({error: "Please fill all fields"});
     }
 
-    if(password !== password){
+    if(password !== confirmPassword){
         return res.status(400).json({error: "Password should be matched"});
     }
 
@@ -24,15 +24,13 @@ export const signup = async (req, res) =>{
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
-    const rand = Math.floor(Math.random() * 100) + 1;
-    const profilePic = `https://avatar.iran.liara.run/public/${rand}`
-
     const newUser = await prisma.user.create({
         data: {
             username, 
             email,
             password: hashedPassword,
             profilePic,
+            difficulty,
         }
     });
 
@@ -60,12 +58,12 @@ export const login = async (req, res) =>{
         const {email, password} = req.body;
         const user = await prisma.user.findUnique({where:{email}});
         if(!user){
-            return res.status(400).json({error:"Invalid email"});
+            return res.status(400).json({error:"Użytkownik nie istnieje"});
         }
         const isPasswordCorrect = await bcryptjs.compare(password, user.password);
 
         if(!isPasswordCorrect){
-            return res.status(400).json({error: "Invalid password"});
+            return res.status(400).json({error: "Nieprawidłowe hasło"});
         }
 
         generateToken(user.id, res);
@@ -100,10 +98,14 @@ export const getMe = async(req, res)=>{
             return res.status(400).json({error:"User not found"});
         }
 
+
         res.status(200).json({
             id: user.id,
             username: user.username,
             profilePic: user.profilePic,
+            email: user.email,
+            level: user.level,
+            createdAt: user.createdAt,
         });
         
         
@@ -112,3 +114,19 @@ export const getMe = async(req, res)=>{
         res.status(500).json({error:"Internal Server Error"});
     }
 }
+/*
+export const updateMe = async(req, res)=>{
+    try {
+        const user = await prisma.user.update({
+            where:{id: req.user.id},
+            data:{
+                posts:{
+                    
+                }
+            }
+
+        })
+    } catch (error) {
+        
+    }
+}*/
