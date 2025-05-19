@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import useSignUp from "../hooks/useSignUp";
 import Loading from "../components/LoadingBall";
 import ChooseImg from "../components/ChooseImg";
-import ChooseDifficulty from "../components/ChooseDifficulty";
+import { Link } from 'react-router-dom';
+import { PasswordValidation } from "../components/level/PasswordValidation";
 
 const SignUp = () => {
 
@@ -14,80 +15,78 @@ const SignUp = () => {
         password: "",
         confirmPassword: "",
         profilePic: "",
-        difficulty: "",
     });
 
+    const [isFocused, setIsFocused] = useState(false);
     const { loading, signUp } = useSignUp();
-    const [selectedImg, setSelectedImg] = useState();
     const [showChooseImg, setShowChooseImg] = useState(false);
-    const [showChooseDifficulty, setShowChooseDifficulty] = useState(false);
 
     const handleSubmitForm = (e) => {
         e.preventDefault();
-        setShowChooseImg(true);
+        if (inputs.email && inputs.password && inputs.confirmPassword && inputs.username) {
+            setShowChooseImg(true);
+        }
     }
 
     useEffect(() => {
         if (inputs.profilePic) {
             setShowChooseImg(false);
-            setShowChooseDifficulty(true);
-        }
-
-        if (inputs.difficulty && inputs.profilePic) {
-            setShowChooseDifficulty(false);
-            console.log(inputs);
             signUp(inputs);
         }
 
-    }, [inputs.profilePic, inputs.difficulty]);
+    }, [inputs.profilePic]);
 
+    const bgDiv = document.documentElement.className == 'themes-dracula' ? 'bg-base100' : 'bg-secondary';
+    const textDiv = document.documentElement.className == 'themes-dracula' ? 'text-neutralContent' : 'text-secondaryContent';
+    const Div = document.documentElement.className == 'themes-dracula' ? 'bg-neutralContent' : 'text-secondaryContent';
+    const inputBg = document.documentElement.className == 'themes-dracula' ? 'bg-gray' : 'bg-base200';
+    const text = document.documentElement.className == 'themes-dracula' ? 'text-base100' : 'text-neutralContent';
+    const textInput = document.documentElement.className == 'themes-dracula' ? 'text-base300' : 'text-neutralContent';
 
 
     if (showChooseImg) {
-        return (<ChooseImg setInputs={setInputs} inputs={inputs} />)
-    } else if (showChooseDifficulty) {
-        return (<ChooseDifficulty setInputs={setInputs} inputs={inputs} />)
+        return (<ChooseImg setInputs={setInputs} inputs={inputs} isX={false} />)
     } else {
         return (
             <>
-                <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                        <h2 className="">EdyPython</h2>
-                        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-baseContent">Sign up to your account</h2>
+                <div className={`flex w-full flex-col justify-center px-2 py-12 lg:px-8 ${bgDiv} h-screen`}>
+                    <div className="sm:mx-auto sm:w-full sm:max-w-sm pb-5">
+                        <h2 className={`font-bold text-center text-3xl ${textDiv} `}>EdyPython</h2>
                     </div>
 
-                    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                        <form className="space-y-6" onSubmit={handleSubmitForm}>
+                    <div className={`px-5 my-3 pt-2 pb-5 sm:mx-auto sm:w-full sm:max-w-sm ${Div} rounded-lg`}>
+                        <h3 className="mt-3 pb-4 text-center text-2xl/9 font-bold tracking-tight text-secondary">Sign up to your account</h3>
+                        <form className="space-y-4" onSubmit={handleSubmitForm}>
 
                             <div>
-                                <label className="block text-sm/6 font-medium text-baseContent">Username</label>
+                                <label className={`block text-sm/6 font-medium ${text}`}>Username: </label>
                                 <div className="mt-2">
-                                    <input type="text" value={inputs.username} onChange={(e) => setInputs({ ...inputs, username: e.target.value })} className="block w-full rounded-md bg-neutral px-3 py-1.5 text-base text-neutralContent outline-1 -outline-offset-1 outline-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6" />
+                                    <input type="text" value={inputs.username} onChange={(e) => setInputs({ ...inputs, username: e.target.value })} className={`block w-full rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6`} />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm/6 font-medium text-baseContent">Email address</label>
+                                <label className={`block text-sm/6 font-medium ${text}`}>Email address: </label>
                                 <div className="mt-2">
-                                    <input type="email" value={inputs.email} onChange={(e) => setInputs({ ...inputs, email: e.target.value })} className="block w-full rounded-md bg-neutral px-3 py-1.5 text-base text-neutralContent outline-1 -outline-offset-1 outline-base300  focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6" />
-                                </div>
-                            </div>
-
-                            <div>
-                                <div className="flex items-center justify-between">
-                                    <label className="block text-sm/6 font-medium text-baseContent">Hasło</label>
-                                </div>
-                                <div className="mt-2">
-                                    <input type="password" value={inputs.password} onChange={(e) => setInputs({ ...inputs, password: e.target.value })} className="block w-full rounded-md bg-neutral px-3 py-1.5 text-base text-neutralContent outline-1 -outline-offset-1 outline-base300  focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6" />
+                                    <input type="email" value={inputs.email} onChange={(e) => setInputs({ ...inputs, email: e.target.value })} className={`block w-full rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6`} />
                                 </div>
                             </div>
 
                             <div>
                                 <div className="flex items-center justify-between">
-                                    <label className="block text-sm/6 font-medium text-baseContent">Powtórz hasło</label>
+                                    <label className={`block text-sm/6 font-medium ${text}`}>Hasło: </label>
                                 </div>
                                 <div className="mt-2">
-                                    <input type="password" value={inputs.confirmPassword} onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })} className="block w-full rounded-md bg-neutral px-3 py-1.5 text-base text-neutralContent outline-1 -outline-offset-1 outline-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6" />
+                                    <input type="password" onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} value={inputs.password} onChange={(e) => setInputs({ ...inputs, password: e.target.value })} className={`block w-full rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6`} />
+                                </div>
+                            </div>
+
+                            <div >
+                                <div className="flex items-center justify-between ">
+                                    <label className={`block text-sm/6 font-medium ${text}`}>Powtórz hasło:</label>
+                                </div>
+                                <div className="mt-2">
+                                    <input type="password" value={inputs.confirmPassword} onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })} className={`block w-full rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2  ${inputs.password === inputs.confirmPassword ? 'focus:outline-secondary' : 'focus:outline-error'}  sm:text-sm/6`} />
                                 </div>
                             </div>
 
@@ -97,12 +96,14 @@ const SignUp = () => {
                             </div>
                         </form>
 
-                        <p className="mt-10 text-center text-sm/6 text-baseContent">
+                        <p className={`block  text-center pt-2 text-sm/4 font-medium ${text}`}>
                             Już masz konto?
-                            <a href="#" className="font-semibold text-secondary hover:text-secondaryHover"> Wejdź</a>
+                            <Link to="/login" className="font-semibold text-secondary hover:text-secondaryHover hover:underline px-2">Wejdź</Link>
                         </p>
                     </div>
                 </div>
+
+                {isFocused && <PasswordValidation password={inputs.password} />}
             </>)
     }
 }

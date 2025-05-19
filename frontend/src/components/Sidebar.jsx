@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Progress from "./Progress";
-import { SquareTerminal, Users, ChevronDown, ChevronUp, SquareCheck } from 'lucide-react';
-import { Link, BrowserRouter } from "react-router-dom";
+import { SquareTerminal, ChevronDown, ChevronUp, Keyboard, KeyboardOff } from 'lucide-react';
+import { Link } from "react-router-dom";
 import { fetchAllChapters } from "../data/useLevel";
+import { useAuthContext } from "../context/AuthContext";
+import { fetchRating } from "../data/useDates";
+import { useProgress } from "../context/ProgressContext";
 
 const Sidebar = ({ sidebar, setSidebar }) => {
 
@@ -10,12 +13,14 @@ const Sidebar = ({ sidebar, setSidebar }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [openChapter, setOpenChapter] = useState(null);
+    const { authUser } = useAuthContext();
+    const [userRating, setUserRating] = useState(null);
+    const { completed, fetchCompleted } = useProgress();
 
     useEffect(() => {
         const getChapters = async () => {
             try {
                 const data = await fetchAllChapters();
-                //setChapters(data);
                 if (data && data.chapters) {
                     setChapters(data.chapters);
                 } else {
@@ -27,6 +32,8 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                 setIsLoading(false);
             }
         };
+
+
         getChapters();
     }, []);
 
@@ -34,23 +41,29 @@ const Sidebar = ({ sidebar, setSidebar }) => {
         setOpenChapter(openChapter === chapterId ? null : chapterId);
     };
 
+    useEffect(() => {
+        const loadRating = async () => {
+            const rating = await fetchRating();
+
+            setUserRating(rating.rating);
+        };
+
+        loadRating();
+    }, [authUser]);
+
+
     return (<>
         <aside className={`  ${!sidebar ? 'hidden' : '-translate-x-full'} fixed top-0 left-0 w-64 h-screen transition-transform sm:translate-x-0 z-40`} >
             <div className="h-full px-3 py-4 overflow-y-auto bg-base200 pt-16">
                 <div className="">
-                    <Progress />
+
                 </div>
                 <ul className="space-y-2 font-medium">
+                    <li><Progress userRating={userRating} /></li>
                     <li>
                         <Link to="/free_space_to_code" className="flex items-center p-2 rounded-lg text-neutralContent hover:bg-neutral group">
                             <SquareTerminal />
                             <span className="ms-3">Wolna przestreń</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/" className="flex items-center p-2 rounded-lg text-neutralContent hover:bg-neutral group">
-                            <Users />
-                            <span className="ms-3">Turniej kodowania</span>
                         </Link>
                     </li>
 
@@ -79,15 +92,22 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                                                 {chapter.levels
                                                     .slice()
                                                     .sort((a, b) => a.id - b.id)
-                                                    .map((level) => (
-                                                        <Link key={level.id} to={`/levels/${level.id}`} className="flex items-center ms-8 p-2 rounded-lg text-neutralContent hover:bg-neutral group">
-                                                            <SquareCheck />
-                                                            <div className="flex flex-col text-sm">
-                                                                <span className="ms-3">{`${level.title.slice(0, 15)}${level.title.length > 15 ? '...' : ''}`}</span>
-                                                                <span className="ms-3 text-baseContent text-xs">level {level.id}</span>
-                                                            </div>
-                                                        </Link>
-                                                    ))}
+                                                    .map((level, index) => {
+                                                        const isCompleted = completed.includes(level.id);
+
+                                                        return (
+                                                            <Link key={level.id} to={`/levels/${level.id}?chapterId=${chapter.id}`}
+                                                                className={`flex items-center ms-8 p-2 rounded-lg text-neutralContent hover:bg-neutral group ${!isCompleted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                                                                onClick={(e) => !isCompleted && e.preventDefault()}>
+                                                                {isCompleted ? <Keyboard /> : <KeyboardOff />}
+                                                                <div className="flex flex-col text-sm">
+                                                                    <span className="ms-3">{`${level.title.slice(0, 15)}${level.title.length > 15 ? '...' : ''}`}</span>
+                                                                    <span className="ms-3 text-baseContent text-xs">level {index + 1}</span>
+                                                                </div>
+                                                            </Link>
+                                                        )
+                                                    }
+                                                    )}
                                             </ul>
                                         )}
                                 </li>

@@ -26,23 +26,23 @@ const CodeExample = ({ code }) => {
             mode="python"
             theme={themeEditor}
             name="code_editor"
-            fontSize={14}
+            fontSize={16}
             value={code}
-            showPrintMargin={true}
+            showPrintMargin={false}
             showGutter={true}
             highlightActiveLine={true}
             readOnly={true}
-            minLines={3}
+            minLines={4}
             maxLines={Infinity}
             setOptions={{
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true,
                 enableSnippets: true,
                 showLineNumbers: true,
-                tabSize: 2,
+                tabSize: 4,
             }}
             className="w-full rounded-lg  border-[#45495c] border-2 "
-            style={{ width: '100%' }}
+            style={{ width: '100%', fontFamily: "Fira Code, monospace", }}
         />
 
     );

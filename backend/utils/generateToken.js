@@ -13,7 +13,6 @@ res.cookie("jwt", token, {
 });
 
 return token;
-
 }
 
 export default generateToken;

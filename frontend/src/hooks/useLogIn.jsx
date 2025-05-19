@@ -21,8 +21,8 @@ const useLogIn = () => {
             const data = await res.json();
 
             if (!res.ok) throw new Error(data.error);
-            setAuthUser(data);
 
+            setAuthUser(data);
         } catch (error) {
             toast.error(error.message);
         } finally {

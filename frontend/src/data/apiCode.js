@@ -1,22 +1,18 @@
 import axios from "axios";
+import { useState } from "react";
 
+export const executeCode = async( sourceCode, id) =>{
+   try {
+    
+    const response = await axios.post(`/api/levels/execute/${id}`, {
+      sourceCode: sourceCode,
+    });
 
-const API = axios.create({
-    baseURL: "https://emkc.org/api/v2/piston"
-})
-
-export const executeCode = async( sourceCode) =>{
-    const response  = await API.post("/execute",
-        {
-            "language": "python",
-            "version": "3.10.0",
-            "files": [
-              {
-                "content": sourceCode
-              }
-            ],
-        }
-    );
+    console.log(response.data);
 
     return response.data;
+   } catch (error) {
+    console.log(error);
+   }
 }
+

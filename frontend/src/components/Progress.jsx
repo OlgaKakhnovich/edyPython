@@ -1,16 +1,26 @@
 import React from "react";
+import { Star } from "lucide-react";
+import { useAuthContext } from "../context/AuthContext";
 
-const Progress = () => {
-    return (<>
-        <div className="py-3">
-            <div className="flex justify-between items-center  pb-2">
-                <h3 className="text-md text-neutralContent font-bold">Progress: </h3>
-                <span className="text-sm font-medium text-neutralContent">45%</span>
-            </div>
-            <div className="w-full rounded-full h-2.5 bg-base300">
-                <div className="bg-secondaryHover h-2.5 rounded-full w-[45%]"></div>
-            </div>
-        </div></>)
+const Progress = ({ userRating }) => {
+    const { authUser, isLoading } = useAuthContext();
+
+    if (isLoading) {
+        return <div className="p-4">Loading...</div>;
+    }
+    else if (!authUser) {
+        return <div className="p-4">No user data</div>;
+    }
+    else {
+        return (<>
+            <div className="flex items-center gap-3 p-4">
+                <span className="text-lg font-semibold text-baseContent">Progress: </span>
+                <div className="flex items-center gap-2">
+                    <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+                    <span className="text-xl font-bold text-baseContent">{userRating}</span>
+                </div>
+            </div></>)
+    }
 }
 
 export default Progress;

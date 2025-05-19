@@ -154,8 +154,8 @@
     --color-accent-hover: #eb8100;
     --color-accent-content: #140101;
     --color-neutral: rgb(65, 69, 88);
-    --color-neutral-content: #edeff2;
-    --color-gray: #c8cacc;
+    --color-neutral-content: #e7e8eae4;
+    --color-gray: #b6b7b9;
     --color-base-100: rgb(39, 40, 50);
     --color-base-200: rgb(27, 28, 36);
     --color-base-300: rgb(65, 69, 88);
@@ -181,6 +181,19 @@
     font-weight: bold;
     padding-top: 1rem;
     padding-bottom: 0.3rem;
+}
+
+.content h4 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding-top: 1rem;
+    padding-bottom: 0.3rem;
+}
+
+.content mark {
+    background-color: var(--color-base-content);
+    color: var(--color-base-100);
+    border-radius: 4px;
 }
 
 .content b {

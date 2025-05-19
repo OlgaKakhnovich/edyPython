@@ -16,6 +16,7 @@ const CodeEditor = ({ code, setCode, editorRef }) => {
 
     const { theme } = useTheme();
     const themeEditor = themes.find(themeObj => themeObj.name === theme)?.editor;
+    const formattedCode = code.replace(/\\n/g, "\n");
 
     const handleEditorLoad = (editor) => {
         console.log("AceEditor is ready to use");
@@ -33,8 +34,8 @@ const CodeEditor = ({ code, setCode, editorRef }) => {
             name="code_editor"
             onChange={onChange}
             onLoad={handleEditorLoad}
-            value={code}
-            fontSize={14}
+            value={formattedCode}
+            fontSize={16}
             showPrintMargin={true}
             showGutter={true}
             highlightActiveLine={true}
@@ -43,10 +44,10 @@ const CodeEditor = ({ code, setCode, editorRef }) => {
                 enableLiveAutocompletion: true,
                 enableSnippets: true,
                 showLineNumbers: true,
-                tabSize: 2,
+                tabSize: 4,
             }}
             className="w-full h-full rounded-lg  border-neutral border-2"
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%', fontFamily: "Fira Code, monospace", }}
         />
     )
 }

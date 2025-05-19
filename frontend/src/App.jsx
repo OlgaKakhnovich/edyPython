@@ -11,6 +11,8 @@ import LevelPage from './pages/LevelPage';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import FreeSpace from './pages/FreeSpace';
+import "./index.css";
+import { ProgressProvider } from './context/ProgressContext';
 
 
 const Overlay = ({ sidebar, setSidebar }) => {
@@ -30,29 +32,32 @@ function App() {
   if (isLoading) {
     return <Loading />
   }
+  else {
+    return (
+      <ProgressProvider userId={authUser?.id}>
+        <div className='h-screen flex items-center justify-center bg-base100'>
+          <Routes>
+            <Route path="/start" element={<StartPage />} />
+            <Route path="/" element={authUser ? <Home /> : <Navigate to={"/start"} />} />
+            <Route path="/signup" element={!authUser ? <SignUp /> : <Navigate to={"/"} />} />
+            <Route path="/login" element={!authUser ? <LogIn /> : <Navigate to={"/"} />} />
+            <Route path="/free_space_to_code" element={authUser ? <FreeSpace /> : <Navigate to={"/start"} />} />
+            <Route path="/levels/:id" element={authUser ? <LevelPage /> : <Navigate to={"/start"} />} />
 
-  return (
-    <div className='h-screen flex items-center justify-center bg-base100'>
-      <Routes>
-        <Route path="/start" element={<StartPage />} />
-        <Route path="/" element={authUser ? <Home /> : <Navigate to={"/start"} />} />
-        <Route path="/signup" element={!authUser ? <SignUp /> : <Navigate to={"/"} />} />
-        <Route path="/login" element={!authUser ? <LogIn /> : <Navigate to={"/"} />} />
-        <Route path="/free_space_to_code" element={authUser ? <FreeSpace /> : <Navigate to={"/start"} />} />
-        <Route path="/levels/:id" element={authUser ? <LevelPage /> : <Navigate to={"/start"} />} />
+          </Routes>
 
-      </Routes>
-
-      {!isAuthPage && (
-        <>
-          <Navbar sidebar={sidebar} setSidebar={setSidebar} />
-          <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
-        </>
-      )}
-      <Overlay sidebar={sidebar} setSidebar={setSidebar} />
-      <Toaster />
-    </div>
-  )
+          {!isAuthPage && (
+            <>
+              <Navbar sidebar={sidebar} setSidebar={setSidebar} />
+              <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
+            </>
+          )}
+          <Overlay sidebar={sidebar} setSidebar={setSidebar} />
+          <Toaster />
+        </div>
+      </ProgressProvider>
+    )
+  }
 }
 
 export default App
