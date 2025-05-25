@@ -29,7 +29,6 @@ const useLogIn = () => {
             setLoading(false);
         }
     }
-
     return { loading, login };
 }
 

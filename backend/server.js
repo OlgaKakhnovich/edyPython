@@ -13,10 +13,9 @@ const PORT = process.env.PORT;
 app.use(cookieParser());
 app.use(express.json());
 
-
 app.use("/api/auth", authRoutes);
 app.use("/api/levels", levelsRoutes);
 
 app.listen(PORT, ()=>{
     console.log("Server is opening and running on port " + PORT);
-})
+});

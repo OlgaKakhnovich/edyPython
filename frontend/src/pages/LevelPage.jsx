@@ -306,7 +306,7 @@ const LevelPage = () => {
                 .
                 <div className="col-start-1 col-end-2 row-start-2 row-end-5 text-baseContent">
 
-                    <nav className="relative z-0 flex border border-neutral rounded-xl overflow-hidden" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
+                    <nav className="relative z-0 flex border border-neutral rounded-xl mb-2 overflow-hidden" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
                         <button
                             type="button"
                             className={`relative min-w-0 flex-1 bg-base200 first:border-s-0   ${activeTab2 === 'content' ? 'bg-neutral' : 'border-transparent'} py-2 px-4 text-baseContent text-sm font-medium text-center overflow-hidden focus:z-10  disabled:opacity-50 disabled:pointer-events-none`}
@@ -322,7 +322,7 @@ const LevelPage = () => {
                             Zadanie
                         </button>
                     </nav>
-                    <div className="overflow-y-auto h-full ">
+                    <div className="overflow-y-auto h-full">
                         <div className="content">
                             {activeTab2 === 'content' && renderArticle()}
                             {activeTab2 === 'task' && (
@@ -333,7 +333,7 @@ const LevelPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-start-2 col-end-3 row-start-1 row-end-2  flex flex-row justify-between items-center gap-2">
+                <div className="col-start-2 col-end-3 row-start-1 row-end-2  flex flex-row justify-between items-center gap-2 ">
                     <div className="flex flex-row items-center justify-end  gap-5">
                         <button onClick={activateHelp} className="p-2 cursor-pointer flex items-center justify-center text-accentContent bg-accent rounded-3xl font-medium hover:bg-accentHover transition-all ease-in duration-200 active:scale-95">
                             <Lightbulb className="text-secondaryContent" />

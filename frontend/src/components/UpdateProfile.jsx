@@ -17,8 +17,6 @@ const UpdateProfile = ({ setShowUpdateProfile }) => {
         profilePic: authUser?.profilePic,
     });
 
-
-
     const handleSubmitForm = (e) => {
         e.preventDefault();
         update(inputs);

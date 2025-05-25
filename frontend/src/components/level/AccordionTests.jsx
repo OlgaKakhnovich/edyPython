@@ -26,9 +26,9 @@ const AccordionTests = ({ tests }) => {
 
                         {openInd === ind && (
                             <div className=" w-full grid grid-cols-3 grid-rows-[0.2fr_1fr] gap-2 py-2">
-                                <div className="col-start-1 col-end-2 row-start-1 row-end-2 text-center text-sm">inputData</div>
-                                <div className="col-start-2 col-end-3 row-start-1 row-end-2 text-center text-sm">expectedOutput</div>
-                                <div className="col-start-3 col-end-4 row-start-1 row-end-2 text-center text-sm">actualOutput</div>
+                                <div className="col-start-1 col-end-2 row-start-1 row-end-2 text-center text-sm">Dane wejściowe</div>
+                                <div className="col-start-2 col-end-3 row-start-1 row-end-2 text-center text-sm">Oczekiwane wyjście</div>
+                                <div className="col-start-3 col-end-4 row-start-1 row-end-2 text-center text-sm">faktyczne wyjście</div>
                                 <div className="col-start-1 col-end-2 row-start-2 row-end-3 text-center font-bold text-lg">{test.inputData.join(",")}</div>
                                 <div className="col-start-2 col-end-3 row-start-2 row-end-3 text-center font-bold text-lg">{test.parsedExpected}</div>
                                 <div className="col-start-3 col-end-4 row-start-2 row-end-3 text-center font-bold text-lg">{test.actualOutput}</div>

@@ -78,8 +78,6 @@ export const fetchLevel = async(id)=>{
 
 export const fetchTask = async(id, datas)=>{
     try {
-        
-        console.log(datas);
         const res = await fetch(`/api/levels/${id}/task`,{
             method: "POST",
             headers: {
@@ -106,12 +104,10 @@ export const fetchTests = async(id)=>{
         if(!res.ok){
             throw new Error(data.error);
         }
-
         return data;
     }catch(error){
         console.error(error);
         toast.error(error.message);
-        return [];
     }
 }
 
