@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Progress from "./Progress";
-import { SquareTerminal, ChevronDown, ChevronUp, Keyboard, KeyboardOff } from 'lucide-react';
+import { SquareTerminal, ChevronDown, ChevronUp, Keyboard, KeyboardOff, ChartBar } from 'lucide-react';
 import { Link } from "react-router-dom";
 import { fetchAllChapters } from "../data/useLevel";
 import { useAuthContext } from "../context/AuthContext";
@@ -67,6 +67,13 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                         </Link>
                     </li>
 
+                    <li>
+                        <Link to="/charts" className="flex items-center p-2 rounded-lg text-neutralContent hover:bg-neutral group">
+                            <ChartBar />
+                            <span className="ms-3">Statystyki</span>
+                        </Link>
+                    </li>
+
                     <hr className="border-neutralContent" />
 
                     <ul>
@@ -77,7 +84,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                                         <SquareTerminal />
                                         <div className="flex flex-col">
                                             <span className="ms-3">{chapter.title}</span>
-                                            <span className="ms-3 text-baseContent text-xs">Shapter {chapter.id}</span>
+                                            <span className="ms-3 text-baseContent text-xs">Moduł {chapter.id}</span>
                                         </div>
                                         {openChapter === chapter.id ? (
                                             <ChevronUp className="ml-auto" />
@@ -102,7 +109,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                                                                 {isCompleted ? <Keyboard /> : <KeyboardOff />}
                                                                 <div className="flex flex-col text-sm">
                                                                     <span className="ms-3">{`${level.title.slice(0, 15)}${level.title.length > 15 ? '...' : ''}`}</span>
-                                                                    <span className="ms-3 text-baseContent text-xs">level {index + 1}</span>
+                                                                    <span className="ms-3 text-baseContent text-xs">Poziom {index + 1}</span>
                                                                 </div>
                                                             </Link>
                                                         )

@@ -13,6 +13,7 @@ import Sidebar from './components/Sidebar';
 import FreeSpace from './pages/FreeSpace';
 import "./index.css";
 import { ProgressProvider } from './context/ProgressContext';
+import Chart from './pages/Charts';
 
 
 const Overlay = ({ sidebar, setSidebar }) => {
@@ -38,12 +39,12 @@ function App() {
         <div className='h-screen flex items-center justify-center bg-base100'>
           <Routes>
             <Route path="/start" element={<StartPage />} />
-            <Route path="/" element={authUser ? <Home /> : <Navigate to={"/start"} />} />
+            <Route path="/" element={authUser ? <Home /> : <Navigate to={"/login"} />} />
             <Route path="/signup" element={!authUser ? <SignUp /> : <Navigate to={"/"} />} />
             <Route path="/login" element={!authUser ? <LogIn /> : <Navigate to={"/"} />} />
-            <Route path="/free_space_to_code" element={authUser ? <FreeSpace /> : <Navigate to={"/start"} />} />
-            <Route path="/levels/:id" element={authUser ? <LevelPage /> : <Navigate to={"/start"} />} />
-
+            <Route path="/free_space_to_code" element={authUser ? <FreeSpace /> : <Navigate to={"/login"} />} />
+            <Route path="/levels/:id" element={authUser ? <LevelPage /> : <Navigate to={"/login"} />} />
+            <Route path="/charts" element={authUser ? <Chart /> : <Navigate to={"/login"} />} />
           </Routes>
 
           {!isAuthPage && (

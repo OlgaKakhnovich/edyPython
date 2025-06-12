@@ -9,7 +9,6 @@ const useLogIn = () => {
     const login = async (email, password) => {
         try {
             setLoading(true);
-
             const res = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: {
@@ -17,11 +16,8 @@ const useLogIn = () => {
                 },
                 body: JSON.stringify({ email, password }),
             });
-
             const data = await res.json();
-
             if (!res.ok) throw new Error(data.error);
-
             setAuthUser(data);
         } catch (error) {
             toast.error(error.message);

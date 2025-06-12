@@ -154,12 +154,12 @@
     --color-accent-hover: #eb8100;
     --color-accent-content: #140101;
     --color-neutral: rgb(65, 69, 88);
-    --color-neutral-content: #e7e8eae4;
-    --color-gray: #b6b7b9;
+    --color-neutral-content: #f4f5f7e4;
+    --color-gray: #d5d5d5;
     --color-base-100: rgb(39, 40, 50);
     --color-base-200: rgb(27, 28, 36);
     --color-base-300: rgb(65, 69, 88);
-    --color-base-content: rgb(191, 191, 191);
+    --color-base-content: rgb(225, 225, 225);
     --color-info: rgb(128, 255, 234);
     --color-info-content: #050d19;
     --color-success: rgb(46, 169, 35);

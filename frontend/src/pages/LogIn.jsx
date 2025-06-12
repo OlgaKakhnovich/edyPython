@@ -19,7 +19,7 @@ const LogIn = () => {
 
     const bgDiv = document.documentElement.className == 'themes-dracula' ? 'bg-base100' : 'bg-secondary';
     const textDiv = document.documentElement.className == 'themes-dracula' ? 'text-neutralContent' : 'text-secondaryContent';
-    const Div = document.documentElement.className == 'themes-dracula' ? 'bg-neutralContent' : 'text-secondaryContent';
+    const Div = document.documentElement.className == 'themes-dracula' ? 'bg-neutralContent' : 'bg-secondaryContent';
     const inputBg = document.documentElement.className == 'themes-dracula' ? 'bg-gray' : 'bg-base200';
     const text = document.documentElement.className == 'themes-dracula' ? 'text-base100' : 'text-neutralContent';
     const textInput = document.documentElement.className == 'themes-dracula' ? 'text-base300' : 'text-neutralContent';
@@ -31,7 +31,7 @@ const LogIn = () => {
             </div>
 
             <div className={`px-5 my-3 pt-2 pb-5 sm:mx-auto sm:w-full sm:max-w-sm ${Div} rounded-lg`}>
-                <h3 className="mt-3 pb-4 text-center text-2xl/9 font-bold tracking-tight text-secondary">Sign in to your account</h3>
+                <h3 className="mt-3 pb-4 text-center text-2xl/9 font-bold tracking-tight text-secondary">Zaloguj się</h3>
                 <form className="space-y-4" onSubmit={handleSubmitForm}>
                     <div>
                         <label className={`block text-sm/6 font-medium ${text}`}>Email address: </label>
@@ -50,7 +50,7 @@ const LogIn = () => {
                     </div>
 
                     <div>
-                        <button type="submit" disabled={loading} className="flex w-full justify-center rounded-md bg-secondary px-3 py-1.5 text-sm/6 font-semibold text-secondaryContent shadow-xs hover:bg-secondaryHover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                        <button type="submit" disabled={loading} className="flex w-full justify-center rounded-md bg-secondary px-3 py-1.5 text-sm/6 font-semibold text-secondaryContent shadow-xs hover:bg-secondaryHover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Zaloguj się</button>
                     </div>
                 </form>
 

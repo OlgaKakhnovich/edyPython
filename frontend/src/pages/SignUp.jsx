@@ -38,8 +38,8 @@ const SignUp = () => {
 
     const bgDiv = document.documentElement.className == 'themes-dracula' ? 'bg-base100' : 'bg-secondary';
     const textDiv = document.documentElement.className == 'themes-dracula' ? 'text-neutralContent' : 'text-secondaryContent';
-    const Div = document.documentElement.className == 'themes-dracula' ? 'bg-neutralContent' : 'text-secondaryContent';
-    const inputBg = document.documentElement.className == 'themes-dracula' ? 'bg-gray' : 'bg-base200';
+    const Div = document.documentElement.className == 'themes-dracula' ? 'bg-neutralContent' : 'bg-secondaryContent';
+    const inputBg = document.documentElement.className == 'themes-dracula' ? 'bg-gray' : 'bg-base100';
     const text = document.documentElement.className == 'themes-dracula' ? 'text-base100' : 'text-neutralContent';
     const textInput = document.documentElement.className == 'themes-dracula' ? 'text-base300' : 'text-neutralContent';
 
@@ -55,20 +55,20 @@ const SignUp = () => {
                     </div>
 
                     <div className={`px-5 my-3 pt-2 pb-5 sm:mx-auto sm:w-full sm:max-w-sm ${Div} rounded-lg`}>
-                        <h3 className="mt-3 pb-4 text-center text-2xl/9 font-bold tracking-tight text-secondary">Sign up to your account</h3>
+                        <h3 className="mt-3 pb-4 text-center text-2xl/9 font-bold tracking-tight text-secondary">Utwórz konto</h3>
                         <form className="space-y-4" onSubmit={handleSubmitForm}>
 
                             <div>
                                 <label className={`block text-sm/6 font-medium ${text}`}>Username: </label>
                                 <div className="mt-2">
-                                    <input type="text" value={inputs.username} onChange={(e) => setInputs({ ...inputs, username: e.target.value })} className={`block w-full rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6`} />
+                                    <input type="text" value={inputs.username} onChange={(e) => setInputs({ ...inputs, username: e.target.value })} className={`block w-full border-2 border-base200 rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6`} />
                                 </div>
                             </div>
 
                             <div>
                                 <label className={`block text-sm/6 font-medium ${text}`}>Email address: </label>
                                 <div className="mt-2">
-                                    <input type="email" value={inputs.email} onChange={(e) => setInputs({ ...inputs, email: e.target.value })} className={`block w-full rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6`} />
+                                    <input type="email" value={inputs.email} onChange={(e) => setInputs({ ...inputs, email: e.target.value })} className={`block border-2 border-base200 w-full rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6`} />
                                 </div>
                             </div>
 
@@ -77,7 +77,7 @@ const SignUp = () => {
                                     <label className={`block text-sm/6 font-medium ${text}`}>Hasło: </label>
                                 </div>
                                 <div className="mt-2">
-                                    <input type="password" onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} value={inputs.password} onChange={(e) => setInputs({ ...inputs, password: e.target.value })} className={`block w-full rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6`} />
+                                    <input type="password" onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} value={inputs.password} onChange={(e) => setInputs({ ...inputs, password: e.target.value })} className={`block w-full border-2 border-base200 rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2 focus:outline-secondary sm:text-sm/6`} />
                                 </div>
                             </div>
 
@@ -86,13 +86,13 @@ const SignUp = () => {
                                     <label className={`block text-sm/6 font-medium ${text}`}>Powtórz hasło:</label>
                                 </div>
                                 <div className="mt-2">
-                                    <input type="password" value={inputs.confirmPassword} onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })} className={`block w-full rounded-md ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2  ${inputs.password === inputs.confirmPassword ? 'focus:outline-secondary' : 'focus:outline-error'}  sm:text-sm/6`} />
+                                    <input type="password" value={inputs.confirmPassword} onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })} className={`block w-full rounded-md border-2 border-base200 ${inputBg} px-3 py-1.5 text-base ${textInput} outline-1 -outline-offset-1 outline-base300 placeholder:text-base300 focus:outline-2 focus:-outline-offset-2  ${inputs.password === inputs.confirmPassword ? 'focus:outline-secondary' : 'focus:outline-error'}  sm:text-sm/6`} />
                                 </div>
                             </div>
 
                             <div>
                                 <button type="submit" disabled={loading} className="flex w-full justify-center rounded-md bg-secondary px-3 py-1.5 text-sm/6 font-semibold text-secondaryContent shadow-xs hover:bg-secondaryHover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                    {loading ? <Loading /> : "Sign Up"}</button>
+                                    {loading ? <Loading /> : "Utwórz"}</button>
                             </div>
                         </form>
 
@@ -103,7 +103,8 @@ const SignUp = () => {
                     </div>
                 </div>
 
-                {isFocused && <PasswordValidation password={inputs.password} />}
+                {<PasswordValidation password={inputs.password} />}
+
             </>)
     }
 }

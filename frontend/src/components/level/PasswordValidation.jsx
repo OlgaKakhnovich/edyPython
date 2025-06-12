@@ -3,9 +3,9 @@ import { X, Check } from "lucide-react";
 
 export const PasswordValidation = ({ password }) => {
 
-    const Div = document.documentElement.className == 'themes-dracula' ? 'bg-neutralContent' : 'text-secondaryContent';
+    const Div = document.documentElement.className == 'themes-dracula' ? 'bg-neutralContent' : 'bg-secondaryContent';
     const text = document.documentElement.className == 'themes-dracula' ? 'text-base100' : 'text-neutralContent';
-    const textStr = document.documentElement.className == 'themes-dracula' ? 'text-secondaryHover' : 'bg-base200';
+    const textStr = document.documentElement.className == 'themes-dracula' ? 'text-secondaryHover' : 'text-secondary';
 
     const checkPassword = [
         {
@@ -51,7 +51,7 @@ export const PasswordValidation = ({ password }) => {
                 <ul className=" flex gap-y-2 flex-col">
                     {checkPassword.map((rule, index) => (
                         <li key={index} className="flex items-center justify-start flex-row gap-x-2">
-                            {rule.valid ? <Check className="text-success" /> : <X />}
+                            {rule.valid ? <Check className="text-success" /> : <X className="text-error" />}
                             <span className={`block text-sm font-medium ${text}`}>
                                 {rule.label}
                             </span>

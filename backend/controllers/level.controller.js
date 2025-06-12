@@ -1,3 +1,4 @@
+
 import { executeCodeWithTests } from "../../frontend/src/data/apiCodeWithTests.js";
 import prisma from "../db/prisma.js";
 
@@ -83,6 +84,55 @@ export const getLevel = async(req, res)=>{
     }
 } 
 
+export const getLevelsProgress = async(req, res)=>{
+    try {
+         const userId = req.user.id;
+         const progresses = await prisma.userLevelProgress.findMany({
+            where: { userId: Number(userId) },
+            select: {
+                date: true,
+                progress: true,
+                level:{
+                    select:{
+                        id:true,
+                        chapterId: true,
+                    },
+                },
+            },
+        });
+
+       const progressInLevel = progresses.map((entry) => ({
+            levelId: entry.level.id,
+            chapterId: entry.level.chapterId,
+            date: entry.date,
+            progress: entry.progress,
+        }));
+
+          progressInLevel.sort((a,b)=>a.levelId-b.levelId);
+            res.status(200).json({progressInLevel});
+    } catch (error) {
+        console.log("Error in level controller", error.message);
+        res.status(500).json({error:"Internal Server Error"});
+    }
+}
+
+export const getChaptersProgress = async(req, res)=>{
+    try{
+        const userId = req.user.id;
+        const progresses = await prisma.userChapterRating.findMany({
+            where:{userId: Number(userId)},
+            select:{
+                rating: true,
+                chapterId: true,
+            },
+        });
+        console.log(progresses);
+        res.status(200).json({progresses});
+    }catch(error){
+        console.log(error);
+        res.status(500).json({message:"Internal Server Error"});
+    }
+}
 
 export const getTests = async(req, res)=>{
     const {id} = req.params;
@@ -241,7 +291,11 @@ const getNextTask = async (userId, allTasks, chapterId, lastTaskId = null, recen
 
     const remainingTasks = allTasks.filter(task=>!completedIds.has(task.id));
 
-    const lastAttempt = lastTaskId ? taskAttempt.find(a=>a.taskId === Number(lastTaskId)) : null;
+    let lastAttempt = null;
+       if (lastTaskId) {
+        lastAttempt = taskAttempt.find(a => a.taskId === Number(lastTaskId));
+    }
+   // const lastAttempt = lastTaskId ? taskAttempt.find(a=>a.taskId === Number(lastTaskId)) : null;
 
     const historySkill = getSkillFromAttempt(taskAttempt);
     let targetDifficulty;
@@ -249,8 +303,8 @@ const getNextTask = async (userId, allTasks, chapterId, lastTaskId = null, recen
     if(lastAttempt){
         const {attempts, hintUsed, task} = lastAttempt;
         const solvedWell = !hintUsed && attempts<=3;
-
-        targetDifficulty = task.difficulty + (solvedWell ? 10 : -10);
+        targetDifficulty = task?.difficulty ?? 50;
+        targetDifficulty += (solvedWell ? 10 : -10);
     }else{
         targetDifficulty = historySkill;
     }
@@ -279,12 +333,19 @@ const getNextTask = async (userId, allTasks, chapterId, lastTaskId = null, recen
     
     return remainingTasks[0] || null;
 }
-
+/*
 const getSkillFromAttempt = (attempts)=>{
     const effective = attempts.filter(a=>!a.hintUsed && a.attempts <=3);
     if(effective.length === 0 ) return 50;
 
     const avg = effective.reduce((sum, a)=>sum + a.task.difficulty, 0)/effective.length;
+    return Math.round(avg);
+}*/
+
+
+const getSkillFromAttempt = (attempts)=>{
+    if(attempts.length === 0 ) return 60;
+    const avg = attempts.reduce((sum, a)=>sum + a.task.difficulty, 0)/attempts.length;
     return Math.round(avg);
 }
 
@@ -401,7 +462,10 @@ export const getTask=async (req, res)=>{
             where:{levelId: Number(levelId)}
         });
 
-        let newTaskInd = taskInd === null ? 1 : taskInd +1;
+        let newTaskInd = (typeof taskInd === "number") ? taskInd + 1 : 1;
+         if (newTaskInd > 3) {
+      newTaskInd = 1;
+    }
        
         const task = await getNextTask(userId, allTasks, chapterId, taskId, recentCompletedTaskIds);
         return res.json({task, taskInd: newTaskInd});

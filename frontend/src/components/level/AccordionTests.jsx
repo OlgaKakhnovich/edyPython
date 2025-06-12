@@ -9,7 +9,6 @@ const AccordionTests = ({ tests }) => {
     };
 
 
-
     return (
         <>
             <div className="flex flex-col gap-3  ">
@@ -19,7 +18,7 @@ const AccordionTests = ({ tests }) => {
                             className="w-full h-10 flex justify-between items-center p-4 bg-base200 hover:bg-base300 transition-all ease-in-out duration-300 text-baseContent">
                             <span>Test {ind + 1}</span>
                             <div className="flex items-center justify-center gap-5">
-                                {test.isPassed ? <span className="text-success">Passed</span> : <span className="text-error">Faild</span>}
+                                {test.isPassed ? <span className="text-success">Zaliczony</span> : <span className="text-error">Faild</span>}
                                 <span>{openInd === ind ? "▲" : "▼"}</span>
                             </div>
                         </button>
@@ -29,9 +28,9 @@ const AccordionTests = ({ tests }) => {
                                 <div className="col-start-1 col-end-2 row-start-1 row-end-2 text-center text-sm">Dane wejściowe</div>
                                 <div className="col-start-2 col-end-3 row-start-1 row-end-2 text-center text-sm">Oczekiwane wyjście</div>
                                 <div className="col-start-3 col-end-4 row-start-1 row-end-2 text-center text-sm">faktyczne wyjście</div>
-                                <div className="col-start-1 col-end-2 row-start-2 row-end-3 text-center font-bold text-lg">{test.inputData.join(",")}</div>
-                                <div className="col-start-2 col-end-3 row-start-2 row-end-3 text-center font-bold text-lg">{test.parsedExpected}</div>
-                                <div className="col-start-3 col-end-4 row-start-2 row-end-3 text-center font-bold text-lg">{test.actualOutput}</div>
+                                <div className="col-start-1 col-end-2 row-start-2 row-end-3 text-center font-bold text-lg">{JSON.stringify(test.inputData, null, 2)}</div>
+                                <div className="col-start-2 col-end-3 row-start-2 row-end-3 text-center font-bold text-lg">{JSON.stringify(test.parsedExpected, null, 2)}</div>
+                                <div className="col-start-3 col-end-4 row-start-2 row-end-3 text-center font-bold text-lg">{JSON.stringify(test.actualOutput, null, 2)}</div>
                             </div>
                         )}
 

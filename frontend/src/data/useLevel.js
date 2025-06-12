@@ -29,6 +29,37 @@ export const fetchAllChapters = async()=>{
     }
 };
 
+export const fetchProgressInLevel = async()=>{
+    try {
+        
+        const res = await fetch("/api/levels/levelProgress");
+        const data = await res.json();
+        if(!res.ok){
+            throw new Error(data.error);
+        }
+        console.log("data: ", data );
+        return data;
+    } catch (error) {
+        console.error(error);
+        toast.error(error.message);
+    }
+}
+
+export const fetchRatingInChapter = async()=>{
+    try {
+        const res = await fetch("/api/levels/chapterProgress");
+        const data = await res.json();
+        if(!res.ok){
+            throw new Error(data.error);
+        }
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error(error);
+        toast.error(error.message);
+    }
+}
+
 export const fetchOnlyChapter = async(id)=>{
     try {
         const res = await fetch(`/api/levels/${id}/chapter`);
@@ -94,6 +125,7 @@ export const fetchTask = async(id, datas)=>{
     } catch (error) {
         console.error(error);
         toast.error(error.message);
+        return null;
     }
 };
 

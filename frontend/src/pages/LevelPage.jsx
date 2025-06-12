@@ -11,8 +11,10 @@ import useProgressUpdate from "../hooks/useProgressUpdate";
 import { Lightbulb } from 'lucide-react';
 import { runCode } from "../data/runCode";
 import LevelResult from "../components/level/LevelResult";
+import InDevelopment from "../components/level/LevelInDevelopment";
 
 const LAST_TASK_INDEX = 3;
+const ONE_TASK_INDEX = 1;
 
 const LevelPage = () => {
 
@@ -89,7 +91,7 @@ const LevelPage = () => {
                 recentCompletedTaskIds
             });
 
-            const newTaskData = createTaskData(taskResponse, chapterId, taskResponse.task.difficulty);
+            const newTaskData = createTaskData(taskResponse, chapterId, taskResponse.task?.difficulty);
 
             console.log("New Task Data: ", newTaskData);
 
@@ -158,6 +160,7 @@ const LevelPage = () => {
         const current = taskDataList[taskDataList.length - 1];
         if (!nextTask || !current) return;
 
+
         if (current.taskInd === LAST_TASK_INDEX) {
             completeLevel();
         } else {
@@ -218,7 +221,7 @@ const LevelPage = () => {
             nextTask: true,
             attempts: 1,
             hintsUsed: false,
-            taskId: taskResponse.task.id,
+            taskId: taskResponse.task?.id,
             difficulty: taskDifficulty,
             chapterId,
         };
@@ -287,15 +290,12 @@ const LevelPage = () => {
     }
 
 
-    if (isLoading || !level || !task || loading) {
+    if (isLoading || !level || loading) {
         return <Loading />
     }
-    else if (error) {
-        return (
-            <div className="w-screen h-screen flex items-center justify-center bg-red-100 text-red-700 font-medium p-4">
-                Wystąpił błąd: {error.message || "Nieznany błąd"}
-            </div>
-        )
+    else if (!task || error) {
+        console.log("Error: ", error);
+        return <InDevelopment />
     } else {
         return (<>
             <div className="grid grid-cols-2 grid-rows-[1fr_5fr_3fr_1fr] gap-x-5 gap-y-2 w-screen h-screen px-12 pt-16 pb-5">
@@ -327,7 +327,8 @@ const LevelPage = () => {
                             {activeTab2 === 'content' && renderArticle()}
                             {activeTab2 === 'task' && (
                                 <div className="">
-                                    <p>{task.task}</p>
+                                    <h2 className="font-bold text-xl text-baseContent">Zadanie: <span className="">{task.title}</span></h2>
+                                    <p>Treść zadania:{task.task}</p>
                                 </div>
                             )}
                         </div>
@@ -358,7 +359,10 @@ const LevelPage = () => {
                 </div>
                 <div className="col-start-2 col-end-3 row-start-4 row-end-5 flex items-center justify-between pt-2 ">
                     <div className="">
-                        <h1 className="font-bold text-xl text-baseContent">{(taskDataList[taskDataList.length - 1]?.taskInd || 0)}/3</h1>
+                        <h1 className="font-bold text-xl text-baseContent">
+                            {(taskDataList[taskDataList.length - 1]?.taskInd || 0)}/ 3
+                        </h1>
+
                     </div>
                     <button className={`h-10 w-24 flex items-center justify-center text-secondaryContent rounded-3xl font-medium text-base transition-all ease-in duration-200 active:scale-95 
                         ${nextTask ? 'bg-secondary cursor-pointer' : 'cursor-not-allowed bg-secondaryHover'}`} onClick={() => handleNextTask()}>
