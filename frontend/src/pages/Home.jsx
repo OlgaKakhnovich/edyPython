@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import Progress from "../components/Progress";
 import Loading from "../components/LoadingBall";
-import UpdateProfile from "../components/updateProfile";
+import UpdateProfile from "../components/UpdateProfile";
 import { fetchRating } from "../data/useDates";
 import Calendar from "../components/Calendar";
 
