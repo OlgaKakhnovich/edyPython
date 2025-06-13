@@ -96,7 +96,7 @@ const LevelPage = () => {
             console.log("New Task Data: ", newTaskData);
 
             setTask(taskResponse.task);
-            setCode(taskResponse.task.code);
+            setCode(taskResponse.task?.code);
             setOutput("Naciśnij \"Kompiluj\" żeby zobaczyć wynik");
             setNextTask(false);
             setTests([]);
