@@ -49,7 +49,7 @@ export const ChartBar = ({ setError, setIsLoading }) => {
     }, []);
 
     const data = {
-        labels: progresses.map(p => `Rozdział ${p.chapterId}`),
+        labels: progresses.map(p => `Moduł ${p.chapterId}`),
         datasets: [
             {
                 label: 'Progres',
@@ -75,7 +75,7 @@ export const ChartBar = ({ setError, setIsLoading }) => {
                 callbacks: {
                     label: function (context) {
                         const item = progresses[context.dataIndex];
-                        return `Rozdział ${item.chapterId}: ${item.rating} punktów`;
+                        return `Moduł ${item.chapterId}: ${item.rating} punktów`;
                     },
                 },
                 backgroundColor: '#2e2e2e',
