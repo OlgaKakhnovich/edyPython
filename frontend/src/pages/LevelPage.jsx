@@ -208,10 +208,10 @@ const LevelPage = () => {
     const calculateScore = (allTestPassed, attempts) => {
         if (!allTestPassed) return 0;
 
-        if (attempts === 1) return 5;
-        else if (attempts === 2) return 4;
-        else if (attempts === 3) return 3;
-        else if (attempts === 4) return 2;
+        if (attempts <= 3) return 5;
+        else if (attempts <= 5) return 4;
+        else if (attempts <= 7) return 3;
+        else if (attempts <= 10) return 2;
         else return 1;
     }
 
